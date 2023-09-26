@@ -1,0 +1,9 @@
+name: hello-world
+compute:
+  cluster: r7z2
+  instance: cpu
+  gpus: 0
+image: bash
+command: |
+  sleep 2
+  echo Hello World!
