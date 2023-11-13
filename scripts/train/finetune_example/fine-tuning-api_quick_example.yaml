@@ -1,0 +1,8 @@
+# following https://docs.mosaicml.com/projects/mcli/en/latest/training/finetuning.html#a-quick-example
+
+model: mosaicml/mpt-7b
+train_data_path: mosaicml/dolly_hhrlhf/train
+save_folder: dbfs:/Volumes/main/timl_schema/mosaicml_checkpoints #s3://<my-bucket>/checkpoints
+
+
+# mcli finetune -f scripts/train/finetune_example/fine-tuning-api_quick_example.yaml

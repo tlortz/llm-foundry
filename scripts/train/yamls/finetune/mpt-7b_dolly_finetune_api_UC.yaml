@@ -1,0 +1,13 @@
+# adapting the basic example in the fine-tuning API docs to send checkpoints to a UC Volume and metrics to MLflow
+# first need to set up Databricks authentication as in https://docs.mosaicml.com/projects/mcli/en/latest/resources/secrets/databricks.html, e.g.
+  # mcli create secret databricks
+
+model: mosaicml/mpt-7b
+task_type: INSTRUCTION_FINETUNE
+train_data_path: mosaicml/dolly_hhrlhf/train
+save_folder: dbfs:/Volumes/main/timl_schema/mosaicml_checkpoints #s3://<my-bucket>/checkpoints
+
+experiment_trackers:
+  - integration_type: mlflow
+    experiment_name: /Users/tim.lortz@databricks.com/Development/MosaicML/mcli_runs
+    tracking_uri: databricks://e2-field-eng

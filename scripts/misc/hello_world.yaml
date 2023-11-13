@@ -1,3 +1,5 @@
+# mcli run -f scripts/misc/hello_world.yaml --follow
+
 name: hello-world
 compute:
   cluster: r7z2
