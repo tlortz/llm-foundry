@@ -1,3 +1,5 @@
+# usage: mcli run -f scripts/train/yamls/finetune/mpt-7b_dolly_sft_annotated.yaml --follow
+
 name: mpt-7b-dolly
 
 compute:
