@@ -8,7 +8,8 @@ integrations:
 # Clone and install the llm-foundry repo so we can run scripts from it
 - integration_type: git_repo
   git_repo: mosaicml/llm-foundry
-  git_commit: v0.2.0
+  # git_commit: v0.2.0
+  git_branch: main
   pip_install: -e .[gpu]
   ssh_clone: false
 
@@ -29,6 +30,12 @@ parameters:
   save_interval: 5ba # How frequently to save checkpoints
   save_num_checkpoints_to_keep: 1  # Important, this cleans up checkpoints saved to DISK
   save_folder: ./checkpoints/{run_name}/
+  loggers:
+    mlflow:
+      tracking_uri: databricks
+      experiment_name: /Users/tim.lortz@databricks.com/MosaicML/MLflow_experiments/mpt-7b-dolly_hhrlhf
+      model_registry_uri: databricks-uc
+      model_registry_prefix: main.timl_mosaic #timl.mosaic_demos
 
   # Maximum sequence length of the model
   # For MPT, you can change this to a different number if you would like to train on longer sequences
@@ -102,7 +109,7 @@ parameters:
   # Optimizer
   # see LLM-foundry llmfoundry/utils/builders.py::build_optimizer for other built-in options
   optimizer:
-    name: decoupled_lionw
+    name: decoupled_adamw
     lr: 5.0e-6
     betas:
     - 0.9
@@ -158,3 +165,11 @@ parameters:
     memory_monitor: {}
     # Log an estimate of how long the training run has left to complete
     runtime_estimator: {}
+    # Log best checkpoint directly to Unity Catalog
+    hf_checkpointer:
+      overwrite: false
+      precision: bfloat16
+      save_folder: s3://timl-mosaic-sandbox/mpt-7b-dolly-hhrlhf/2023-11-21-1450
+      # dbfs:/Volumes/main/timl_mosaic/mpt-7b-dolly_hhrlhf #dbfs:/Volumes/timl/mosaic_demos/mpt-7b-dolly_hhrlhf
+      save_interval: 1dur
+      mlflow_registered_model_name: mpt-7b-dolly-hhrlhf-tl
